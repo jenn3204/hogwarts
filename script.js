@@ -1,36 +1,118 @@
 window.addEventListener("DOMContentLoaded", start);
 
 let students = [];
-const studentlist = "students1991.json";
+const studentlist = "https://petlatkea.dk/2020/hogwarts/students.json";
 const template = document.querySelector("template");
 const list = document.querySelector("#list");
+
+const Student = {
+  firstname: "",
+  lastname: "",
+  middlename: "",
+  nickname: "",
+  gender: "",
+  image: "",
+  house: ""
+};
 
 function start() {
   getData();
   hidePopup();
 }
 
-async function getData() {
-  let jsonData = await fetch(studentlist);
-  students = await jsonData.json();
-  console.log(jsonData);
+// async function getData() {
+//   let jsonData = await fetch(studentlist);
+//   studentsData = await jsonData.json();
+//   console.log(jsonData);
 
-  showJson();
+//   prepareData(studentsData);
+// }
+
+function getData() {
+  fetch(studentlist)
+    .then(response => response.json())
+    .then(jsonData => {
+      prepareData(jsonData);
+    });
 }
 
-function showJson() {
-  students.forEach(student => {
-    const clone = template.cloneNode(true).content;
+function prepareData(jsonData) {
+  console.log("Prepare");
 
-    clone.querySelector("#name").textContent = student.fullname;
-    clone.querySelector("#house").textContent = student.house;
+  jsonData.forEach(jsonObject => {
+    const student = Object.create(Student);
 
-    clone.querySelector(".student").addEventListener("click", () => {
-      showPopup(student);
-    });
+    //TODO: clean names. split and capitalize
+    const fullnameString = jsonObject.fullname.trim().toLowerCase();
+    const fullnameArray = fullnameString.split(" ");
 
-    list.appendChild(clone);
+    let first = fullnameArray[0];
+    let last = fullnameArray[fullnameArray.length - 1];
+
+    let firstName = first[0].toUpperCase() + first.substring(1);
+    let lastName = last[0].toUpperCase() + last.substring(1);
+
+    console.log(firstName, lastName);
+
+    if (fullnameArray.length > 2) {
+      let middle = fullnameArray[1];
+      let middleName = middle[0].toUpperCase() + middle.substring(1);
+
+      student.middlename = middleName;
+
+      if (middle[0] == `"` || "`") {
+        student.middlename = "";
+        let nickName = middle[1].toUpperCase() + middle.substring(2, middle.length - 1);
+
+        student.nickname = nickName;
+      }
+    } else {
+      student.middlename = "";
+    }
+
+    //TODO: clean house
+    let house = jsonObject.house.trim().toLowerCase();
+    let studentHouse = house[0].toUpperCase() + house.substring(1);
+
+    //TODO: clean gender
+    let gender = jsonObject.gender.trim().toLowerCase();
+    let studentGender = gender[0].toUpperCase() + gender.substring(1);
+
+    //TODO: find nicknames
+
+    student.firstname = firstName;
+    student.lastname = lastName;
+    // student.middlename = jsonObject.fullname;
+    //student.nickname = jsonObject.fullname;
+    student.gender = studentGender;
+    student.image = jsonObject.fullname;
+    student.house = studentHouse;
+
+    students.push(student);
   });
+
+  showList();
+}
+
+function showList() {
+  console.log("show list");
+  list.innerHTML = "";
+
+  students.forEach(showJson);
+}
+
+function showJson(student) {
+  console.log("show json");
+  const clone = template.cloneNode(true).content;
+
+  clone.querySelector("#name").textContent = student.firstname + " " + student.middlename;
+  clone.querySelector("#house").textContent = student.house + " " + student.nickname;
+
+  clone.querySelector(".student").addEventListener("click", () => {
+    showPopup(student);
+  });
+
+  list.appendChild(clone);
 }
 
 function hidePopup() {
@@ -43,7 +125,7 @@ function showPopup(student) {
 
   document.querySelector("#popup .close").addEventListener("click", hidePopup);
 
-  document.querySelector("#popup_name").textContent = student.fullname;
+  document.querySelector("#popup_name").textContent = student.firstname;
   document.querySelector("#popup_house").textContent = student.house;
 
   document.querySelector("#popup").dataset.house = student.house;
