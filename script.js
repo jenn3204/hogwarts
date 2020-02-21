@@ -20,14 +20,6 @@ function start() {
   hidePopup();
 }
 
-// async function getData() {
-//   let jsonData = await fetch(studentlist);
-//   studentsData = await jsonData.json();
-//   console.log(jsonData);
-
-//   prepareData(studentsData);
-// }
-
 function getData() {
   fetch(studentlist)
     .then(response => response.json())
@@ -42,7 +34,7 @@ function prepareData(jsonData) {
   jsonData.forEach(jsonObject => {
     const student = Object.create(Student);
 
-    //TODO: clean names. split and capitalize
+    //clean names, split and capitalize
     const fullnameString = jsonObject.fullname.trim().toLowerCase();
     const fullnameArray = fullnameString.split(" ");
 
@@ -53,6 +45,8 @@ function prepareData(jsonData) {
     let lastName = last[0].toUpperCase() + last.substring(1);
 
     console.log(firstName, lastName);
+
+    //find nicknames and hyphens
 
     if (fullnameArray.length > 2) {
       let middle = fullnameArray[1];
@@ -70,22 +64,27 @@ function prepareData(jsonData) {
       student.middlename = "";
     }
 
-    //TODO: clean house
+    if (lastName.indexOf("-") > -1) {
+      let hyphen = lastName.indexOf("-");
+      let Hyphen = lastName.substring(hyphen);
+      let capHyphen = Hyphen[0] + Hyphen[1].toUpperCase() + Hyphen.substring(2);
+      //let hypenName = lastName.substring(0, hyphen) +
+      student.lastname = lastName.substring(0, hyphen) + capHyphen;
+    } else {
+      student.lastname = lastName;
+    }
+
+    //cleaning house
     let house = jsonObject.house.trim().toLowerCase();
     let studentHouse = house[0].toUpperCase() + house.substring(1);
 
-    //TODO: clean gender
+    //cleaning gender
     let gender = jsonObject.gender.trim().toLowerCase();
     let studentGender = gender[0].toUpperCase() + gender.substring(1);
 
-    //TODO: find nicknames
-
     student.firstname = firstName;
-    student.lastname = lastName;
-    // student.middlename = jsonObject.fullname;
-    //student.nickname = jsonObject.fullname;
     student.gender = studentGender;
-    student.image = jsonObject.fullname;
+    student.image = "";
     student.house = studentHouse;
 
     students.push(student);
@@ -105,8 +104,8 @@ function showJson(student) {
   console.log("show json");
   const clone = template.cloneNode(true).content;
 
-  clone.querySelector("#name").textContent = student.firstname + " " + student.middlename;
-  clone.querySelector("#house").textContent = student.house + " " + student.nickname;
+  clone.querySelector("#name").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
+  clone.querySelector("#house").textContent = student.house;
 
   clone.querySelector(".student").addEventListener("click", () => {
     showPopup(student);
@@ -126,7 +125,7 @@ function showPopup(student) {
   document.querySelector("#popup .close").addEventListener("click", hidePopup);
 
   document.querySelector("#popup_name").textContent = student.firstname;
-  document.querySelector("#popup_house").textContent = student.house;
+  document.querySelector("#popup_house").textContent = "House: " + student.house;
 
   document.querySelector("#popup").dataset.house = student.house;
   const studentHouse = document.querySelector("#popup").dataset.house;
