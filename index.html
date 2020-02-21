@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link href="https://fonts.googleapis.com/css?family=Eater&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Averia+Sans+Libre&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet" />
+
+    <title>The Theme-inator - Jennifer Jaqué</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Hogwarts</h1>
+      <h3>Students of 1991</h3>
+    </header>
+    <template>
+      <article class="student">
+        <h3 id="name"></h3>
+        <p id="house"></p>
+      </article>
+    </template>
+
+    <section id="list"></section>
+
+    <section id="popup" data-house="">
+      <article id="student_popup">
+        <button class="close">✕</button>
+        <h3 id="popup_name"></h3>
+        <p id="popup_house"></p>
+        <div id="popup_crest"></div>
+        <label id="theme-changer">
+          <p>Choose theme</p>
+          <select name="theme" id="theme">
+            <option value="gryffindor">Gryffindor theme</option>
+            <option value="hufflepuff">Hufflepuff theme</option>
+            <option value="ravenclaw">Ravenclaw theme</option>
+            <option value="slytherin">Slytherin theme</option>
+          </select>
+        </label>
+      </article>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

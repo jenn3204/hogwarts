@@ -1,0 +1,174 @@
+:root {
+  --mainfont: "Oswald", sans-serif;
+}
+
+body {
+  background-color: #d9bf8f70;
+  scroll-behavior: smooth;
+}
+
+h1 {
+  font-family: "Eater", cursive;
+  margin: 0;
+  font-size: 3rem;
+}
+
+h3 {
+  font-family: "Averia Sans Libre", cursive;
+  margin: 0;
+}
+
+p {
+  font-family: var(--mainfont);
+}
+
+header {
+  text-align: center;
+}
+
+/** House variables **/
+
+.gryffindor {
+  --primary-color: #8c1127;
+  --secondary-color: #f2ce1b;
+  --crest: url(crest/gryffindor.png);
+  --crestheight: 242px;
+}
+
+.ravenclaw {
+  --primary-color: #0378a6;
+  --secondary-color: #f2911b;
+  --crest: url(crest/ravenclaw.png);
+  --crestheight: 240px;
+}
+
+.slytherin {
+  --primary-color: #1f734c;
+  --secondary-color: #b3b4b6;
+  --crest: url(crest/slytherin.png);
+  --crestheight: 236px;
+}
+
+.hufflepuff {
+  --primary-color: #fddd78;
+  --secondary-color: black;
+  --crest: url(crest/hufflepuff.png);
+  --crestheight: 250px;
+}
+
+/** List/overview **/
+
+.student {
+  border: none;
+  cursor: pointer;
+  line-height: 0.5;
+  padding: 10px;
+  background-color: #c6c8cc70;
+  border-radius: 5px;
+}
+
+.student:hover {
+  background-color: #c6c8cc;
+}
+
+#list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 1rem;
+  width: 90vw;
+  margin: 40px auto;
+}
+
+/**** Popup window *****/
+
+#popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #6e675b87;
+  overflow: scroll;
+}
+
+#student_popup {
+  width: 80vw;
+  min-height: 30vh;
+  margin: 1rem auto;
+  padding: 2rem;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  line-height: 0.5;
+  border: 3px solid var(--secondary-color);
+  border-radius: 10px;
+  display: grid;
+  grid-template-areas:
+    "close crest"
+    "name crest"
+    "house crest"
+    ". crest"
+    "theme crest";
+}
+
+#popup_crest {
+  background-image: var(--crest);
+  background-size: 100%;
+  width: 200px;
+  height: var(--crestheight);
+  grid-area: crest;
+}
+
+.close {
+  background: none;
+  border: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--secondary-color);
+  grid-area: close;
+  text-align: left;
+}
+
+#popup_name {
+  grid-area: name;
+}
+
+#popup_house {
+  grid-area: house;
+}
+
+/** Select/option thingy **/
+
+#theme,
+label#theme-changer,
+option {
+  background-color: var(--primary-color);
+  border-color: var(--secondary-color);
+  color: var(--secondary-color);
+  font-family: var(--mainfont);
+}
+
+label#theme-changer {
+  display: flex;
+  flex-direction: column;
+  grid-area: theme;
+}
+
+select#theme {
+  margin: 0;
+  height: 30px;
+  width: 200px;
+}
+
+/** mediaqueries **/
+
+@media screen and (min-width: 600px) {
+  #list {
+    width: 60vw;
+  }
+
+  #student_popup {
+    width: 500px;
+  }
+}
