@@ -3,18 +3,18 @@
 }
 
 body {
-  background-color: #d9bf8f70;
+  background-color: whitesmoke;
   scroll-behavior: smooth;
 }
 
 h1 {
-  font-family: "Eater", cursive;
+  font-family: "Playfair Display";
   margin: 0;
   font-size: 3rem;
 }
 
 h3 {
-  font-family: "Averia Sans Libre", cursive;
+  font-family: "Playfair Display";
   margin: 0;
 }
 
@@ -56,6 +56,22 @@ header {
   --crestheight: 250px;
 }
 
+/** Filter og sort drop down **/
+
+section#filt_sort {
+  width: 60vw;
+  margin: 40px auto 0;
+}
+
+select#filtering,
+select#sorting {
+  width: 200px;
+  height: 30px;
+  font-family: var(--mainfont);
+  font-size: 1rem;
+  margin: 5px 5px 0 0;
+}
+
 /** List/overview **/
 
 .student {
@@ -76,7 +92,7 @@ header {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 1rem;
   width: 90vw;
-  margin: 40px auto;
+  margin: 20px auto;
 }
 
 /**** Popup window *****/
@@ -95,7 +111,7 @@ header {
   width: 80vw;
   min-height: 30vh;
   margin: 1rem auto;
-  padding: 2rem;
+  padding: 1rem 2rem;
   background-color: var(--primary-color);
   color: var(--secondary-color);
   line-height: 0.5;
@@ -103,7 +119,7 @@ header {
   border-radius: 10px;
   display: grid;
   grid-template-areas:
-    "close crest"
+    ". close"
     "name crest"
     "house crest"
     ". crest"
@@ -127,7 +143,7 @@ header {
   cursor: pointer;
   color: var(--secondary-color);
   grid-area: close;
-  text-align: left;
+  text-align: right;
 }
 
 #popup_name {

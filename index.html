@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link href="https://fonts.googleapis.com/css?family=Eater&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Averia+Sans+Libre&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet" />
 
     <title>Hogwarts studentlist</title>
 
@@ -18,6 +17,29 @@
       <h1>Hogwarts</h1>
       <h3>Students of 1991</h3>
     </header>
+
+    <!-- FILTERING -->
+    <section id="filt_sort">
+      <select name="filtering" id="filtering">
+        <option class="filter" data-action="filter" value="*">Filter</option>
+        <option class="filter" data-action="filter" value="*">All Current Students</option>
+        <option class="filter" data-action="filter" value="Gryffindor">Gryffindor</option>
+        <option class="filter" data-action="filter" value="Hufflepuff">Hufflepuff</option>
+        <option class="filter" data-action="filter" value="Slytherin">Slyterin</option>
+        <option class="filter" data-action="filter" value="Ravenclaw">Ravenclaw</option>
+        <option class="filter" data-action="filter" value="expelled">Expelled Students</option>
+        <option class="filter" data-action="filter" value="prefect">Prefects</option>
+        <option class="filter" data-action="filter" value="squad">Inquisitorial Squad</option>
+      </select>
+
+      <select name="sorting" id="sorting">
+        <option class="sort" data-action="sort" value="*">Sort by</option>
+        <option class="sort" data-action="sort" value="firstname">First name</option>
+        <option class="sort" data-action="sort" value="lastname">Last name</option>
+        <option class="sort" data-action="sort" value="house">House</option>
+      </select>
+    </section>
+
     <template>
       <article class="student">
         <h3 id="name"></h3>
