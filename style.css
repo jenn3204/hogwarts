@@ -5,6 +5,11 @@
 body {
   background-color: whitesmoke;
   scroll-behavior: smooth;
+  margin: 0;
+}
+
+img {
+  width: 100%;
 }
 
 h1 {
@@ -15,7 +20,7 @@ h1 {
 
 h3 {
   font-family: "Playfair Display";
-  margin: 0;
+  margin: 5px 0;
 }
 
 p {
@@ -24,6 +29,12 @@ p {
 
 header {
   text-align: center;
+  /* background-image: url(img/black2.svg);
+  background-size: 100%; */
+  background-color: black;
+  height: 120px;
+  width: 100%;
+  color: white;
 }
 
 /** House variables **/
@@ -81,6 +92,7 @@ select#sorting {
   padding: 10px;
   background-color: #c6c8cc70;
   border-radius: 5px;
+  text-align: center;
 }
 
 .student:hover {
@@ -89,10 +101,15 @@ select#sorting {
 
 #list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-gap: 1rem;
   width: 90vw;
   margin: 20px auto;
+}
+
+#list_img {
+  width: 140px;
+  margin: 10px 0;
 }
 
 /**** Popup window *****/
@@ -121,9 +138,10 @@ select#sorting {
   grid-template-areas:
     ". close"
     "name crest"
+    "nickname crest"
+    "gender crest"
     "house crest"
-    ". crest"
-    "theme crest";
+    "theme .";
 }
 
 #popup_crest {
@@ -152,6 +170,14 @@ select#sorting {
 
 #popup_house {
   grid-area: house;
+}
+
+#popup_gender {
+  grid-area: gender;
+}
+
+#popup_nick {
+  grid-area: nickname;
 }
 
 /** Select/option thingy **/

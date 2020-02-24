@@ -1,3 +1,5 @@
+"use strict";
+
 window.addEventListener("DOMContentLoaded", start);
 
 let students = [];
@@ -48,8 +50,12 @@ function prepareData(jsonData) {
     let firstName = first[0].toUpperCase() + first.substring(1);
     let lastName = last[0].toUpperCase() + last.substring(1);
 
+    //first names
+    student.firstname = firstName;
+
     console.log(firstName, lastName);
-    //find nicknames and hyphens
+
+    //middlenames and nicknames
 
     if (fullnameArray.length > 2) {
       let middle = fullnameArray[1];
@@ -68,6 +74,8 @@ function prepareData(jsonData) {
       student.nickname = "";
     }
 
+    // hyphens and last names
+
     if (lastName.indexOf("-") > -1) {
       let hyphen = lastName.indexOf("-");
       let Hyphen = lastName.substring(hyphen);
@@ -81,15 +89,22 @@ function prepareData(jsonData) {
     //cleaning house
     let house = jsonObject.house.trim().toLowerCase();
     let studentHouse = house[0].toUpperCase() + house.substring(1);
+    student.house = studentHouse;
 
     //cleaning gender
     let gender = jsonObject.gender.trim().toLowerCase();
     let studentGender = gender[0].toUpperCase() + gender.substring(1);
-
-    student.firstname = firstName;
     student.gender = studentGender;
-    student.image = "";
-    student.house = studentHouse;
+
+    //images
+
+    if (lastName == "Patil") {
+      let image = "images/" + lastName.toLowerCase() + "_" + firstName[0].toLowerCase() + firstName.substring(1) + ".png";
+      student.image = image;
+    } else {
+      let image = "images/" + lastName.toLowerCase() + "_" + firstName[0].toLowerCase() + ".png";
+      student.image = image;
+    }
 
     students.push(student);
     console.log(student.firstname, student.middlename, student.nickname, student.lastname);
@@ -110,6 +125,8 @@ function showJson(student) {
   const clone = template.cloneNode(true).content;
 
   clone.querySelector("#name").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
+  clone.querySelector("#list_img").src = student.image;
+  clone.querySelector("#list_img").alt = "student";
   clone.querySelector("#house").textContent = student.house;
 
   clone.querySelector(".student").addEventListener("click", () => {
@@ -130,7 +147,9 @@ function showPopup(student) {
   document.querySelector("#popup .close").addEventListener("click", hidePopup);
 
   document.querySelector("#popup_name").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
+  document.querySelector("#popup_nick").textContent = "Nickname: " + student.nickname;
   document.querySelector("#popup_house").textContent = "House: " + student.house;
+  document.querySelector("#popup_gender").textContent = "Gender: " + student.gender;
 
   document.querySelector("#popup").dataset.house = student.house;
   const studentHouse = document.querySelector("#popup").dataset.house;
