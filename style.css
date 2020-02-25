@@ -21,6 +21,8 @@ h1 {
 h3 {
   font-family: "Playfair Display";
   margin: 5px 0;
+  line-height: 1.2rem;
+  font-size: 1rem;
 }
 
 p {
@@ -43,28 +45,28 @@ header {
   --primary-color: #8c1127;
   --secondary-color: #f2ce1b;
   --crest: url(crest/gryffindor.png);
-  --crestheight: 242px;
+  --crestheight: 61px;
 }
 
 .ravenclaw {
   --primary-color: #0378a6;
   --secondary-color: #f2911b;
   --crest: url(crest/ravenclaw.png);
-  --crestheight: 240px;
+  --crestheight: 61px;
 }
 
 .slytherin {
   --primary-color: #1f734c;
   --secondary-color: #b3b4b6;
   --crest: url(crest/slytherin.png);
-  --crestheight: 236px;
+  --crestheight: 61px;
 }
 
 .hufflepuff {
   --primary-color: #fddd78;
   --secondary-color: black;
   --crest: url(crest/hufflepuff.png);
-  --crestheight: 250px;
+  --crestheight: 62px;
 }
 
 /** Filter og sort drop down **/
@@ -76,7 +78,7 @@ section#filt_sort {
 
 select#filtering,
 select#sorting {
-  width: 200px;
+  width: 185px;
   height: 30px;
   font-family: var(--mainfont);
   font-size: 1rem;
@@ -136,18 +138,21 @@ select#sorting {
   border-radius: 10px;
   display: grid;
   grid-template-areas:
-    ". close"
-    "name crest"
-    "nickname crest"
-    "gender crest"
-    "house crest"
-    "theme .";
+    "crest close"
+    ". ."
+    "name . "
+    "img nickname"
+    "img gender"
+    "img house "
+    "img . "
+    "img ."
+    "theme theme";
 }
 
 #popup_crest {
   background-image: var(--crest);
   background-size: 100%;
-  width: 200px;
+  width: 50px;
   height: var(--crestheight);
   grid-area: crest;
 }
@@ -166,6 +171,11 @@ select#sorting {
 
 #popup_name {
   grid-area: name;
+}
+
+#popup_img {
+  grid-area: img;
+  width: 200px;
 }
 
 #popup_house {

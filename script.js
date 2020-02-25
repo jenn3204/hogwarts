@@ -17,6 +17,12 @@ const Student = {
   house: ""
 };
 
+const settings = {
+  filter: "*",
+  sorting: "*",
+  direction: "asc"
+};
+
 function start() {
   getData();
   hidePopup();
@@ -113,6 +119,12 @@ function prepareData(jsonData) {
   showList(students);
 }
 
+function buildList() {
+  const currentList = filterStudents(settings.filter);
+
+  showList(currentList);
+}
+
 function showList(students) {
   console.log("show list");
   list.innerHTML = "";
@@ -147,6 +159,8 @@ function showPopup(student) {
   document.querySelector("#popup .close").addEventListener("click", hidePopup);
 
   document.querySelector("#popup_name").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
+  document.querySelector("#popup_img").src = student.image;
+  document.querySelector("#popup_img").alt = "student";
   document.querySelector("#popup_nick").textContent = "Nickname: " + student.nickname;
   document.querySelector("#popup_house").textContent = "House: " + student.house;
   document.querySelector("#popup_gender").textContent = "Gender: " + student.gender;
@@ -179,8 +193,10 @@ function selected() {
 
 function filter() {
   const chosenFilter = this.value;
+  settings.filter = chosenFilter;
   console.log(chosenFilter);
-  filterStudents(chosenFilter);
+
+  buildList();
 }
 
 function filterStudents(chosenFilter) {
@@ -194,60 +210,53 @@ function filterStudents(chosenFilter) {
     }
   }
 
-  console.log(result);
-  showList(result);
+  return result;
 }
 
 //sorting
 
 function sort() {
   const chosenSorting = this.value;
-  console.log(chosenSorting);
+  const direction = this.dataset.sortDirection;
 
-  if (chosenSorting == "firstname") {
-    sortByFirstName();
-  } else if (chosenSorting == "lastname") {
-    sortByLastName();
-  } else if (chosenSorting == "house") {
-    sortByHouse();
+  if (settings.sorting == chosenSorting) {
+    toggleDirection(direction, chosenSorting);
+  }
+
+  settings.sorting = chosenSorting;
+
+  sortFunction(direction, chosenSorting);
+}
+
+function toggleDirection(direction, chosenSorting) {
+  console.log("toggle");
+  if (direction === "asc") {
+    document.querySelector(`[data-sort="${chosenSorting}"]`).setAttribute("data-sort-direction", "desc");
+  } else {
+    document.querySelector(`[data-sort="${chosenSorting}"]`).setAttribute("data-sort-direction", "asc");
   }
 }
 
-function sortByFirstName() {
-  const sorting = students.sort((a, b) => {
-    if (a.firstname < b.firstname) {
-      return -1;
+function sortFunction(direction, chosenSorting) {
+  const sorting = students.sort(compareFunction);
+
+  function compareFunction(a, b) {
+    console.log("compare");
+    if (direction == "asc") {
+      console.log("Hvis nu");
+      if (a[chosenSorting] > b[chosenSorting]) {
+        return -1;
+      } else {
+        return 1;
+      }
     } else {
-      return 1;
+      if (a[chosenSorting] < b[chosenSorting]) {
+        return -1;
+      } else {
+        return 1;
+      }
     }
-  });
+  }
 
-  console.log(sorting);
-  showList(sorting);
-}
-
-function sortByLastName() {
-  const sorting = students.sort((a, b) => {
-    if (a.lastname < b.lastname) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
-
-  console.log(sorting);
-  showList(sorting);
-}
-
-function sortByHouse() {
-  const sorting = students.sort((a, b) => {
-    if (a.house < b.house) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
-
-  console.log(sorting);
-  showList(sorting);
+  buildList(sorting);
 }

@@ -33,10 +33,10 @@
       </select>
 
       <select name="sorting" id="sorting">
-        <option class="sort" data-action="sort" value="*">Sort by</option>
-        <option class="sort" data-action="sort" value="firstname">First name</option>
-        <option class="sort" data-action="sort" value="lastname">Last name</option>
-        <option class="sort" data-action="sort" value="house">House</option>
+        <option class="sort" data-action="sort" data-sort-direction="asc" value="*">Sort by</option>
+        <option class="sort" data-action="sort" data-sort-direction="asc" value="firstname">First name</option>
+        <option class="sort" data-action="sort" data-sort-direction="asc" value="lastname">Last name</option>
+        <option class="sort" data-action="sort" data-sort-direction="asc" value="house">House</option>
       </select>
     </section>
 
@@ -54,6 +54,7 @@
       <article id="student_popup">
         <button class="close">✕</button>
         <h3 id="popup_name"></h3>
+        <img id="popup_img" src="" alt="" />
         <p id="popup_nick"></p>
         <p id="popup_house"></p>
         <p id="popup_gender"></p>
