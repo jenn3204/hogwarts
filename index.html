@@ -32,12 +32,19 @@
         <option class="filter" data-action="filter" value="squad">Inquisitorial Squad</option>
       </select>
 
+      <!-- SORTING -->
       <select name="sorting" id="sorting">
         <option class="sort" data-action="sort" data-sort-direction="asc" value="*">Sort by</option>
         <option class="sort" data-action="sort" data-sort-direction="asc" value="firstname">First name</option>
         <option class="sort" data-action="sort" data-sort-direction="asc" value="lastname">Last name</option>
         <option class="sort" data-action="sort" data-sort-direction="asc" value="house">House</option>
       </select>
+
+      <!-- SEARCHING -->
+      <div id="search_bar">
+        <input id="search" type="text" name="search" placeholder="Search" />
+        <button type="submit"></button>
+      </div>
     </section>
 
     <template>

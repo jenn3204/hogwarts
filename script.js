@@ -30,6 +30,10 @@ function start() {
   // filtering and sorting
   document.querySelector("select#filtering").addEventListener("change", filter);
   document.querySelector("select#sorting").addEventListener("change", sort);
+
+  //search
+  document.querySelector("#search").addEventListener("input", search);
+  // document.querySelector("#search_bar button").addEventListener("click", search);
 }
 
 function getData() {
@@ -259,4 +263,29 @@ function sortFunction(direction, chosenSorting) {
   }
 
   buildList(sorting);
+}
+
+function search() {
+  const chosenSearch = event.target.value;
+  console.log(chosenSearch);
+
+  document.querySelector("#search_bar button").addEventListener("click", function() {
+    searchFor(chosenSearch);
+  });
+}
+
+function searchFor(chosenSearch) {
+  console.log("jeg er her");
+
+  const result = students.filter(searchFunction);
+
+  function searchFunction(student) {
+    if (chosenSearch == student.firstname || chosenSearch == student.lastname) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  showList(result);
 }
