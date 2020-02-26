@@ -131,6 +131,8 @@ function prepareData(jsonData) {
 function buildList() {
   const currentList = filterStudents(settings.filter);
 
+  document.querySelector("#displayed_amount").textContent = "Displayed: " + currentList.length;
+
   showList(currentList);
 }
 
@@ -178,6 +180,14 @@ function showJson(student) {
   });
 
   list.appendChild(clone);
+
+  listDetails(student);
+}
+
+function listDetails() {
+  document.querySelector("#total_amount").textContent = "Total: " + students.length;
+
+  document.querySelector("#grif_amount").textContent = "Gryffindor: ";
 }
 
 function hidePopup() {
