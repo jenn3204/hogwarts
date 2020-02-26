@@ -84,6 +84,7 @@ select#sorting,
   font-family: var(--mainfont);
   font-size: 1rem;
   margin: 5px 5px 0 0;
+  cursor: pointer;
 }
 
 #search_bar {
@@ -159,15 +160,15 @@ select#sorting,
   border-radius: 10px;
   display: grid;
   grid-template-areas:
-    "crest close"
-    ". ."
-    "name . "
-    "img nickname"
-    "img gender"
-    "img house "
-    "img . "
-    "img ."
-    "theme theme";
+    ". . close"
+    "name . ."
+    ". . ."
+    "img nickname ."
+    "img gender ."
+    "img house ."
+    "img . ."
+    "img . ."
+    "theme theme crest";
 }
 
 #popup_crest {
