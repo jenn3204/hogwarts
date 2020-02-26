@@ -130,6 +130,7 @@ function prepareData(jsonData) {
 
 function buildList() {
   const currentList = filterStudents(settings.filter);
+  console.log("setiings: " + settings.filter);
 
   document.querySelector("#displayed_amount").textContent = "Displayed: " + currentList.length;
 
@@ -253,6 +254,10 @@ function filterStudents(chosenFilter) {
 
   function filterFunction(student) {
     if (chosenFilter == student.house || chosenFilter == "*") {
+      return true;
+    } else if (chosenFilter == "prefect" && student.prefect == true) {
+      return true;
+    } else if (chosenFilter == "squad" && student.squad == true) {
       return true;
     } else {
       return false;
