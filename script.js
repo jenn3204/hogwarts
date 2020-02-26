@@ -14,7 +14,8 @@ const Student = {
   nickname: "",
   gender: "",
   image: "",
-  house: ""
+  house: "",
+  prefect: false
 };
 
 const settings = {
@@ -116,6 +117,8 @@ function prepareData(jsonData) {
       student.image = image;
     }
 
+    student.prefect = Student.prefect;
+
     students.push(student);
     console.log(student.firstname, student.middlename, student.nickname, student.lastname);
   });
@@ -145,7 +148,19 @@ function showJson(student) {
   clone.querySelector("#list_img").alt = "student";
   clone.querySelector("#house").textContent = student.house;
 
-  clone.querySelector(".student").addEventListener("click", () => {
+  //prefects and inquisitorial squad
+
+  if (student.prefect == false) {
+    clone.querySelector("#make_prefect").textContent = "Make prefect!";
+  } else if (student.prefect == true) {
+    clone.querySelector("#make_prefect").textContent = "I am a prefect!";
+  }
+
+  clone.querySelector("#make_prefect").addEventListener("click", function() {
+    togglePrefects(student);
+  });
+
+  clone.querySelector("#list_img").addEventListener("click", () => {
     showPopup(student);
   });
 
@@ -169,6 +184,7 @@ function showPopup(student) {
   document.querySelector("#popup_house").textContent = "House: " + student.house;
   document.querySelector("#popup_gender").textContent = "Gender: " + student.gender;
 
+  //themes
   document.querySelector("#popup").dataset.house = student.house;
   const studentHouse = document.querySelector("#popup").dataset.house;
 
@@ -288,4 +304,34 @@ function searchFor(chosenSearch) {
   }
 
   showList(result);
+}
+
+// prefects and inquisitorial squad
+
+function togglePrefects(student) {
+  const prefects = students.filter(student => student.prefect);
+  console.log(prefects);
+
+  const prefectsOfSameHouse = prefects.filter(prefect => prefect.house === student.house);
+  console.log(prefectsOfSameHouse);
+
+  const prefectGender = prefects.some(prefect => {
+    return prefect.gender === student.gender && prefect.house === student.house;
+  });
+
+  if (student.prefect == true) {
+    student.prefect = false;
+  } else if (student.prefect == false) {
+    if (prefectsOfSameHouse.length > 1) {
+      alert("only two from each house!");
+      student.prefect = false;
+    } else if (prefectGender) {
+      alert("not same gender!");
+    } else {
+      student.prefect = true;
+    }
+  }
+
+  console.log(student.prefect);
+  buildList(students);
 }
