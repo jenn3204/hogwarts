@@ -40,6 +40,10 @@ header {
   color: white;
 }
 
+.hide {
+  display: none;
+}
+
 /** House variables **/
 
 .gryffindor {
@@ -240,6 +244,27 @@ select#theme {
   width: 200px;
 }
 
+/** Alert popup **/
+
+#alert_popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #6e675b87;
+  overflow: scroll;
+}
+
+#alert_box {
+  width: 80vw;
+  min-height: 30vh;
+  margin: 20vh auto;
+  padding: 1rem 2rem;
+  background-color: white;
+  text-align: center;
+}
+
 /** mediaqueries **/
 
 @media screen and (min-width: 600px) {
@@ -247,7 +272,8 @@ select#theme {
     width: 60vw;
   }
 
-  #student_popup {
+  #student_popup,
+  #alert_box {
     width: 500px;
   }
 }

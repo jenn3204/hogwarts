@@ -15,7 +15,8 @@ const Student = {
   gender: "",
   image: "",
   house: "",
-  prefect: false
+  prefect: false,
+  squad: false
 };
 
 const settings = {
@@ -118,6 +119,7 @@ function prepareData(jsonData) {
     }
 
     student.prefect = Student.prefect;
+    student.squad = Student.squad;
 
     students.push(student);
     console.log(student.firstname, student.middlename, student.nickname, student.lastname);
@@ -160,6 +162,17 @@ function showJson(student) {
     togglePrefects(student);
   });
 
+  if (student.squad == false) {
+    clone.querySelector("#squad_button").textContent = "Add to inquisitorial squad";
+  } else if (student.squad == true) {
+    clone.querySelector("#squad_button").textContent = "I am on the squad!";
+  }
+
+  clone.querySelector("#squad_button").addEventListener("click", function() {
+    toggleSquad(student);
+  });
+
+  // show popup when click on student img
   clone.querySelector("#list_img").addEventListener("click", () => {
     showPopup(student);
   });
@@ -170,6 +183,12 @@ function showJson(student) {
 function hidePopup() {
   document.querySelector("#popup").style.display = "none";
   document.querySelector("#student_popup").classList = "";
+
+  // hide alert popup
+  document.querySelector("#alert_popup").classList.add("hide");
+  document.querySelector("#notsamegender").classList = "";
+  document.querySelector("#squad_info").classList = "";
+  document.querySelector("#onlytwo").classList = "";
 }
 
 function showPopup(student) {
@@ -323,10 +342,11 @@ function togglePrefects(student) {
     student.prefect = false;
   } else if (student.prefect == false) {
     if (prefectsOfSameHouse.length > 1) {
-      alert("only two from each house!");
       student.prefect = false;
+      showPrefectAlert();
     } else if (prefectGender) {
-      alert("not same gender!");
+      student.prefect = false;
+      showPrefectGenderAlert();
     } else {
       student.prefect = true;
     }
@@ -334,4 +354,45 @@ function togglePrefects(student) {
 
   console.log(student.prefect);
   buildList(students);
+}
+
+function toggleSquad(student) {
+  const squadMembers = students.filter(student => student.squad);
+  console.log(squadMembers);
+
+  if (student.squad == true) {
+    student.squad = false;
+  } else if (student.squad == false) {
+    if (student.house == "Slytherin") {
+      student.squad = true;
+    } else {
+      student.squad = false;
+      showSquadAlert();
+    }
+  }
+
+  buildList(students);
+}
+
+function showPrefectAlert() {
+  document.querySelector("#alert_popup").classList.toggle("hide");
+  document.querySelector("#notsamegender").classList.add("hide");
+  document.querySelector("#squad_info").classList.add("hide");
+
+  document.querySelector("#close_info").addEventListener("click", hidePopup);
+}
+
+function showPrefectGenderAlert() {
+  document.querySelector("#alert_popup").classList.remove("hide");
+  document.querySelector("#squad_info").classList.add("hide");
+
+  document.querySelector("#close_info").addEventListener("click", hidePopup);
+}
+
+function showSquadAlert() {
+  document.querySelector("#alert_popup").classList.remove("hide");
+  document.querySelector("#notsamegender").classList.add("hide");
+  document.querySelector("#onlytwo").classList.add("hide");
+
+  document.querySelector("#close_info").addEventListener("click", hidePopup);
 }
