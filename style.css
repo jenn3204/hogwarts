@@ -1,5 +1,6 @@
 :root {
   --mainfont: "Oswald", sans-serif;
+  --titlefont: "Playfair Display";
 }
 
 body {
@@ -13,13 +14,18 @@ img {
 }
 
 h1 {
-  font-family: "Playfair Display";
+  font-family: var(--titlefont);
   margin: 0;
   font-size: 3rem;
 }
 
+h2 {
+  font-size: 1.7rem;
+  font-family: var(--titlefont);
+}
+
 h3 {
-  font-family: "Playfair Display";
+  font-family: var(--titlefont);
   margin: 5px 0;
   line-height: 1.2rem;
   font-size: 1rem;
@@ -28,6 +34,16 @@ h3 {
 p {
   font-family: var(--mainfont);
   margin: 0;
+  line-height: 1.5rem;
+}
+
+button {
+  font-family: var(--mainfont);
+  font-size: 0.8rem;
+  background-color: whitesmoke;
+  width: 150px;
+  height: 25px;
+  cursor: pointer;
 }
 
 header {
@@ -74,6 +90,25 @@ header {
   --crestheight: 62px;
 }
 
+/** list of details **/
+
+#overview {
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+#list_details {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#list_details p {
+  margin: 5px;
+  padding: 2px;
+}
+
 /** Filter og sort drop down **/
 
 section#filt_sort {
@@ -117,15 +152,18 @@ select#sorting,
 
 #student {
   border: none;
-  cursor: pointer;
   padding: 10px;
   background-color: #c6c8cc70;
   border-radius: 5px;
   text-align: center;
 }
 
-.student:hover {
+#student:hover {
   background-color: #c6c8cc;
+}
+
+#list_img {
+  cursor: pointer;
 }
 
 #list {
@@ -165,16 +203,14 @@ select#sorting,
   border-radius: 10px;
   display: grid;
   grid-template-areas:
-    ". . close"
-    "name . ."
-    ". . ."
-    "img nickname ."
-    "img gender ."
-    "img house ."
-    "img . ."
-    "img . ."
-    "prefect . ."
-    "theme theme crest";
+    "name close"
+    "name . "
+    "img nickname"
+    "img gender"
+    "img house"
+    "img bloodstatus"
+    "img ."
+    "theme crest";
 }
 
 #popup_crest {
@@ -218,8 +254,8 @@ select#sorting,
   grid-area: nickname;
 }
 
-#make_prefect {
-  grid-area: prefect;
+#popup_bloodstatus {
+  grid-area: bloodstatus;
 }
 
 /** Select/option thingy **/

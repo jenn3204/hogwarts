@@ -297,6 +297,7 @@ function filter() {
 
   if (chosenFilter == "expelled") {
     showExpelled(expelledStudents);
+    document.querySelector("#displayed_amount").textContent = "Displayed: " + expelledStudents.length;
   } else {
     buildList();
   }
@@ -418,8 +419,6 @@ function showExpelled() {
   console.log("show expelled");
   list.innerHTML = "";
 
-  console.log("ER DET HER?");
-
   expelledStudents.forEach(showJson);
 }
 
@@ -508,6 +507,13 @@ function systemHacked() {
     squad: false
   };
 
-  students.push(myself);
+  students.unshift(myself);
+
+  // if (student.bloodstatus == "Muggleborn" || student.bloodstatus == "Halfblood") {
+  //   student.bloodstatus = "Pureblood";
+  // } else if (student.bloodstatus == "Pureblood") {
+  //   student.bloodstatus = "goddag";
+  // }
+
   showList(students);
 }
