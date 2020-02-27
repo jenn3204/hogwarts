@@ -3,6 +3,8 @@
 window.addEventListener("DOMContentLoaded", start);
 
 let students = [];
+let pureblood = [];
+let halfblood = [];
 const studentlist = "https://petlatkea.dk/2020/hogwarts/students.json";
 const familiesList = "https://petlatkea.dk/2020/hogwarts/families.json";
 const template = document.querySelector("template");
@@ -17,7 +19,8 @@ const Student = {
   image: "",
   house: "",
   prefect: false,
-  squad: false
+  squad: false,
+  bloodstatus: ""
 };
 
 const settings = {
@@ -27,7 +30,7 @@ const settings = {
 };
 
 function start() {
-  getData();
+  getData(familiesList, prepareBloodstatus);
   hidePopup();
 
   // filtering and sorting
@@ -42,12 +45,21 @@ function start() {
   document.querySelector("#hack_button").addEventListener("click", systemHacked);
 }
 
-function getData() {
-  fetch(studentlist)
+function getData(url, callback) {
+  fetch(url)
     .then(response => response.json())
     .then(jsonData => {
-      prepareData(jsonData);
+      callback(jsonData);
     });
+}
+
+function prepareBloodstatus(familiesJson) {
+  pureblood = familiesJson.pure;
+  halfblood = familiesJson.half;
+  console.log(pureblood);
+  console.log(halfblood);
+
+  getData(studentlist, prepareData);
 }
 
 function prepareData(jsonData) {
@@ -124,6 +136,17 @@ function prepareData(jsonData) {
 
     student.prefect = Student.prefect;
     student.squad = Student.squad;
+
+    //blood status
+    if (pureblood.indexOf(student.lastname) > -1 && halfblood.indexOf(student.lastname) > -1) {
+      student.bloodstatus = "Pureblood (but with half)";
+    } else if (pureblood.indexOf(student.lastname) > -1) {
+      student.bloodstatus = "Pureblood";
+    } else if (halfblood.indexOf(student.lastname) > -1) {
+      student.bloodstatus = "Halfblood";
+    } else {
+      student.bloodstatus = "Muggleborn";
+    }
 
     students.push(student);
     console.log(student.firstname, student.middlename, student.nickname, student.lastname);
@@ -217,6 +240,7 @@ function showPopup(student) {
   document.querySelector("#popup_nick").textContent = "Nickname: " + student.nickname;
   document.querySelector("#popup_house").textContent = "House: " + student.house;
   document.querySelector("#popup_gender").textContent = "Gender: " + student.gender;
+  document.querySelector("#popup_bloodstatus").textContent = "Bloodstatus: " + student.bloodstatus;
 
   //themes
   document.querySelector("#popup").dataset.house = student.house;
@@ -382,7 +406,7 @@ function toggleSquad(student) {
   if (student.squad == true) {
     student.squad = false;
   } else if (student.squad == false) {
-    if (student.house == "Slytherin") {
+    if (student.house == "Slytherin" && student.bloodstatus == "Pureblood") {
       student.squad = true;
     } else {
       student.squad = false;
