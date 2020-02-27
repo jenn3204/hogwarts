@@ -129,6 +129,11 @@ function prepareData(jsonData) {
     if (lastName == "Patil") {
       let image = "images/" + lastName.toLowerCase() + "_" + firstName[0].toLowerCase() + firstName.substring(1) + ".png";
       student.image = image;
+    } else if (lastName.indexOf("-") > -1) {
+      let hyphen = lastName.indexOf("-");
+      let Hyphen = lastName.substring(hyphen + 1);
+      let image = "images/" + Hyphen + "_" + firstName[0].toLowerCase() + ".png";
+      student.image = image;
     } else {
       let image = "images/" + lastName.toLowerCase() + "_" + firstName[0].toLowerCase() + ".png";
       student.image = image;
