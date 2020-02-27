@@ -115,7 +115,7 @@ select#sorting,
 
 /** List/overview **/
 
-.student {
+#student {
   border: none;
   cursor: pointer;
   padding: 10px;

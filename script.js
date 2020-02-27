@@ -3,6 +3,7 @@
 window.addEventListener("DOMContentLoaded", start);
 
 let students = [];
+let expelledStudents = [];
 let pureblood = [];
 let halfblood = [];
 const studentlist = "https://petlatkea.dk/2020/hogwarts/students.json";
@@ -20,7 +21,8 @@ const Student = {
   house: "",
   prefect: false,
   squad: false,
-  bloodstatus: ""
+  bloodstatus: "",
+  expelled: false
 };
 
 const settings = {
@@ -56,8 +58,6 @@ function getData(url, callback) {
 function prepareBloodstatus(familiesJson) {
   pureblood = familiesJson.pure;
   halfblood = familiesJson.half;
-  console.log(pureblood);
-  console.log(halfblood);
 
   getData(studentlist, prepareData);
 }
@@ -80,8 +80,6 @@ function prepareData(jsonData) {
 
     //first names
     student.firstname = firstName;
-
-    console.log(firstName, lastName);
 
     //middlenames and nicknames
 
@@ -154,7 +152,6 @@ function prepareData(jsonData) {
     }
 
     students.push(student);
-    console.log(student.firstname, student.middlename, student.nickname, student.lastname);
   });
 
   showList(students);
@@ -207,12 +204,24 @@ function showJson(student) {
     toggleSquad(student);
   });
 
+  // expelling
+  clone.querySelector("#expel_button").addEventListener("click", function() {
+    expelStudent(student);
+  });
+
+  // styling og expelled list
+  if (student.expelled === true) {
+    console.log(student);
+    clone.querySelector("#student").style.filter = "grayscale(100)";
+    clone.querySelector("#make_prefect").style.display = "none";
+    clone.querySelector("#squad_button").style.display = "none";
+    clone.querySelector("#expel_button").style.display = "none";
+  }
+
   // show popup when click on student img
   clone.querySelector("#list_img").addEventListener("click", () => {
     showPopup(student);
   });
-
-  console.log(students);
 
   list.appendChild(clone);
 
@@ -222,8 +231,12 @@ function showJson(student) {
 function listDetails(current) {
   document.querySelector("#total_amount").textContent = "Total: " + students.length;
   document.querySelector("#displayed_amount").textContent = "Displayed: " + current.length;
+  document.querySelector("#expelled_amount").textContent = "Expelled students: " + expelledStudents.length;
 
-  document.querySelector("#grif_amount").textContent = "Gryffindor: ";
+  document.querySelector("#grif_amount").textContent = "Gryffindor: " + students.filter(student => student.house == "Gryffindor").length;
+  document.querySelector("#huffle_amount").textContent = "Hufflepuff: " + students.filter(student => student.house == "Hufflepuff").length;
+  document.querySelector("#slyth_amount").textContent = "Slytherin: " + students.filter(student => student.house == "Slytherin").length;
+  document.querySelector("#raven_amount").textContent = "Ravenclaw: " + students.filter(student => student.house == "Ravenclaw").length;
 }
 
 function hidePopup() {
@@ -282,7 +295,11 @@ function filter() {
   settings.filter = chosenFilter;
   console.log(chosenFilter);
 
-  buildList();
+  if (chosenFilter == "expelled") {
+    showExpelled(expelledStudents);
+  } else {
+    buildList();
+  }
 }
 
 function filterStudents(chosenFilter) {
@@ -350,6 +367,7 @@ function sortFunction(chosenSorting) {
   buildList(sorting);
 }
 
+//searching
 function search() {
   const chosenSearch = event.target.value;
   console.log(chosenSearch);
@@ -382,6 +400,27 @@ function searchFor(chosenSearch) {
 
   showList(result);
   listDetails(result);
+}
+
+// expelling
+function expelStudent(student) {
+  const studentIndex = students.indexOf(student);
+  console.log(studentIndex);
+
+  students.splice(studentIndex, 1);
+  expelledStudents.push(student);
+  student.expelled = true;
+
+  buildList(students);
+}
+
+function showExpelled() {
+  console.log("show expelled");
+  list.innerHTML = "";
+
+  console.log("ER DET HER?");
+
+  expelledStudents.forEach(showJson);
 }
 
 // prefects and inquisitorial squad
