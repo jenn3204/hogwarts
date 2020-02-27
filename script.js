@@ -302,33 +302,32 @@ function filterStudents(chosenFilter) {
 
 function sort() {
   const chosenSorting = this.value;
-  const direction = this.dataset.sortDirection;
+  // const direction = this.dataset.sortDirection;
 
-  if (settings.sorting == chosenSorting) {
-    toggleDirection(direction, chosenSorting);
-  }
+  // if (settings.sorting == chosenSorting) {
+  //   toggleDirection(direction, chosenSorting);
+  // }
 
   settings.sorting = chosenSorting;
 
-  sortFunction(direction, chosenSorting);
+  sortFunction(chosenSorting);
 }
 
-function toggleDirection(direction, chosenSorting) {
-  console.log("toggle");
-  if (direction === "asc") {
-    document.querySelector(`[data-sort="${chosenSorting}"]`).setAttribute("data-sort-direction", "desc");
-  } else {
-    document.querySelector(`[data-sort="${chosenSorting}"]`).setAttribute("data-sort-direction", "asc");
-  }
-}
+// function toggleDirection(direction, chosenSorting) {
+//   console.log("toggle");
+//   if (direction === "asc") {
+//     document.querySelector(`[data-sort="${chosenSorting}"]`).setAttribute("data-sort-direction", "desc");
+//   } else {
+//     document.querySelector(`[data-sort="${chosenSorting}"]`).setAttribute("data-sort-direction", "asc");
+//   }
+// }
 
-function sortFunction(direction, chosenSorting) {
+function sortFunction(chosenSorting) {
   const sorting = students.sort(compareFunction);
 
   function compareFunction(a, b) {
     console.log("compare");
-    if (direction == "asc") {
-      console.log("Hvis nu");
+    if (chosenSorting == "prefect" || chosenSorting == "squad") {
       if (a[chosenSorting] > b[chosenSorting]) {
         return -1;
       } else {
