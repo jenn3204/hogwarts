@@ -99,6 +99,7 @@ select#sorting,
 
 #search {
   margin: 0;
+  cursor: text;
 }
 
 #search_bar button {

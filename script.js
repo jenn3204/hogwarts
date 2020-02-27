@@ -153,15 +153,15 @@ function prepareData(jsonData) {
   });
 
   showList(students);
+  listDetails(students);
 }
 
 function buildList() {
   const currentList = filterStudents(settings.filter);
   console.log("setiings: " + settings.filter);
 
-  document.querySelector("#displayed_amount").textContent = "Displayed: " + currentList.length;
-
   showList(currentList);
+  listDetails(currentList);
 }
 
 function showList(students) {
@@ -207,13 +207,16 @@ function showJson(student) {
     showPopup(student);
   });
 
+  console.log(students);
+
   list.appendChild(clone);
 
   listDetails(student);
 }
 
-function listDetails() {
+function listDetails(current) {
   document.querySelector("#total_amount").textContent = "Total: " + students.length;
+  document.querySelector("#displayed_amount").textContent = "Displayed: " + current.length;
 
   document.querySelector("#grif_amount").textContent = "Gryffindor: ";
 }
@@ -347,6 +350,12 @@ function search() {
   const chosenSearch = event.target.value;
   console.log(chosenSearch);
 
+  document.querySelector("#search").addEventListener("keyup", function(e) {
+    if (e.keyCode === 13) {
+      searchFor(chosenSearch);
+    }
+  });
+
   document.querySelector("#search_bar button").addEventListener("click", function() {
     searchFor(chosenSearch);
   });
@@ -358,7 +367,9 @@ function searchFor(chosenSearch) {
   const result = students.filter(searchFunction);
 
   function searchFunction(student) {
-    if (chosenSearch == student.firstname || chosenSearch == student.lastname) {
+    const studentName = student.firstname.toLowerCase() + student.middlename.toLowerCase() + student.lastname.toLowerCase();
+
+    if (studentName.indexOf(chosenSearch) > -1) {
       return true;
     } else {
       return false;
@@ -366,6 +377,7 @@ function searchFor(chosenSearch) {
   }
 
   showList(result);
+  listDetails(result);
 }
 
 // prefects and inquisitorial squad
@@ -406,7 +418,7 @@ function toggleSquad(student) {
   if (student.squad == true) {
     student.squad = false;
   } else if (student.squad == false) {
-    if (student.house == "Slytherin" && student.bloodstatus == "Pureblood") {
+    if (student.house == "Slytherin" || student.bloodstatus == "Pureblood") {
       student.squad = true;
     } else {
       student.squad = false;
