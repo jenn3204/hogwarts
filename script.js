@@ -4,6 +4,7 @@ window.addEventListener("DOMContentLoaded", start);
 
 let students = [];
 const studentlist = "https://petlatkea.dk/2020/hogwarts/students.json";
+const familiesList = "https://petlatkea.dk/2020/hogwarts/families.json";
 const template = document.querySelector("template");
 const list = document.querySelector("#list");
 
@@ -36,6 +37,9 @@ function start() {
   //search
   document.querySelector("#search").addEventListener("input", search);
   // document.querySelector("#search_bar button").addEventListener("click", search);
+
+  // hacking
+  document.querySelector("#hack_button").addEventListener("click", systemHacked);
 }
 
 function getData() {
@@ -410,4 +414,21 @@ function showSquadAlert() {
   document.querySelector("#onlytwo").classList.add("hide");
 
   document.querySelector("#close_info").addEventListener("click", hidePopup);
+}
+
+function systemHacked() {
+  const myself = {
+    firstname: "Jennifer",
+    lastname: "Jaqué",
+    middlename: "Strejby",
+    nickname: "Jenni",
+    gender: "Girl",
+    image: "images/jaque_j.jpg",
+    house: "Anemonehus",
+    prefect: false,
+    squad: false
+  };
+
+  students.push(myself);
+  showList(students);
 }
