@@ -112,8 +112,8 @@ header {
 /** Filter og sort drop down **/
 
 section#filt_sort {
-  width: 60vw;
-  margin: 40px auto 0;
+  width: 45vw;
+  margin: 20px auto 0;
 }
 
 select#filtering,
@@ -130,6 +130,7 @@ select#sorting,
 #search_bar {
   width: 225px;
   float: right;
+  margin: 10px 0;
 }
 
 #search {
@@ -312,5 +313,14 @@ select#theme {
   #student_popup,
   #alert_box {
     width: 500px;
+  }
+
+  section#filt_sort {
+    width: 60vw;
+    margin: 40px auto 0;
+  }
+
+  #search_bar {
+    margin: 0;
   }
 }
