@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 746 680">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #ed1c24;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 50px;
+      }
+    </style>
+  </defs>
+  <title>expel_badge</title>
+  <g id="Layer_2" data-name="Layer 2">
+    <path d="M32.24,71.57c28,13.72,92.93,40.48,176.37,29,95-13,157.3-67.74,180-89.78,13.3,16.8,76.56,93.1,181.14,101.67,74.72,6.12,130.79-25.6,152.54-39.61-4.18,73.78-20.54,204.19-91.76,340.67-38,72.79-126.19,241.8-232.38,250.88C266.26,675.71,105.18,440.65,32.24,71.57Z"/>
+  </g>
+  <g id="Layer_3" data-name="Layer 3">
+    <g>
+      <line class="cls-1" x1="95" y1="568.52" x2="670" y2="73"/>
+      <line class="cls-1" x1="670" y1="568.52" x2="95" y2="73"/>
+    </g>
+  </g>
+</svg>

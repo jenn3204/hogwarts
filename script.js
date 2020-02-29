@@ -191,9 +191,9 @@ function showJson(student) {
   //prefects and inquisitorial squad
 
   if (student.prefect == false) {
-    clone.querySelector("#make_prefect").textContent = "Make prefect!";
+    clone.querySelector("#make_prefect").style.filter = "grayscale(100)";
   } else if (student.prefect == true) {
-    clone.querySelector("#make_prefect").textContent = "I am a prefect!";
+    clone.querySelector("#make_prefect").style.filter = "none";
   }
 
   clone.querySelector("#make_prefect").addEventListener("click", function() {
@@ -201,14 +201,17 @@ function showJson(student) {
   });
 
   if (student.squad == false) {
-    clone.querySelector("#squad_button").textContent = "Add to inquisitorial squad";
+    clone.querySelector("#squad_button").style.filter = "grayscale(100)";
   } else if (student.squad == true) {
-    clone.querySelector("#squad_button").textContent = "I am on the squad!";
+    clone.querySelector("#squad_button").style.filter = "none";
   }
 
-  clone.querySelector("#squad_button").addEventListener("click", function() {
-    toggleSquad(student);
-  });
+  if (student.house == "Slytherin" || student.bloodstatus == "Pureblood") {
+    clone.querySelector("#squad_button").classList.remove("hide");
+    clone.querySelector("#squad_button").addEventListener("click", function() {
+      toggleSquad(student);
+    });
+  }
 
   // expelling
   clone.querySelector("#expel_button").addEventListener("click", function() {
@@ -243,7 +246,7 @@ function showJson(student) {
   }
 
   // show popup when click on student img
-  clone.querySelector("#list_img").addEventListener("click", () => {
+  clone.querySelector("#list_info").addEventListener("click", () => {
     showPopup(student);
   });
 
@@ -286,6 +289,18 @@ function showPopup(student) {
   document.querySelector("#popup_house").textContent = "House: " + student.house;
   document.querySelector("#popup_gender").textContent = "Gender: " + student.gender;
   document.querySelector("#popup_bloodstatus").textContent = "Bloodstatus: " + student.bloodstatus;
+
+  if (student.prefect == true) {
+    document.querySelector("#make_prefect2").classList.remove("hide");
+  } else {
+    document.querySelector("#make_prefect2").classList.add("hide");
+  }
+
+  if (student.squad == true) {
+    document.querySelector("#squad_button2").classList.remove("hide");
+  } else {
+    document.querySelector("#squad_button2").classList.add("hide");
+  }
 
   //themes
   document.querySelector("#popup").dataset.house = student.house;
@@ -549,7 +564,7 @@ function showExpelAlert() {
 
 function systemHacked(student) {
   if (systemIsHacked == false) {
-    document.querySelector("body").style.backgroundColor = "rosybrown";
+    document.querySelector("body").style.backgroundImage = "url(img/hearts_background.svg";
 
     const myself = Object.create(Student);
     myself.firstname = "Jennifer";
@@ -558,7 +573,7 @@ function systemHacked(student) {
     myself.nickname = "Jenni";
     myself.gender = "Girl";
     myself.image = "images/jaque_j.jpg";
-    myself.house = "Anemonehus";
+    myself.house = "Gryffindor";
     myself.prefect = false;
     myself.squad = false;
     myself.cannotBeExpelled = true;

@@ -1,6 +1,9 @@
 :root {
   --mainfont: "Oswald", sans-serif;
   --titlefont: "Playfair Display";
+  --beigecolor: #f8ecbf;
+  --greycolor: #c6c8cc;
+  --lightgreycolor: #c6c8cc;
 }
 
 body {
@@ -60,34 +63,38 @@ header {
   display: none;
 }
 
+footer {
+  text-align: center;
+}
+
 /** House variables **/
 
 .gryffindor {
   --primary-color: #8c1127;
   --secondary-color: #f2ce1b;
   --crest: url(crest/gryffindor.png);
-  --crestheight: 61px;
+  --crestwidth: 35px;
 }
 
 .ravenclaw {
   --primary-color: #0378a6;
   --secondary-color: #f2911b;
   --crest: url(crest/ravenclaw.png);
-  --crestheight: 61px;
+  --crestwidth: 35px;
 }
 
 .slytherin {
   --primary-color: #1f734c;
   --secondary-color: #b3b4b6;
   --crest: url(crest/slytherin.png);
-  --crestheight: 61px;
+  --crestwidth: 35px;
 }
 
 .hufflepuff {
   --primary-color: #fddd78;
   --secondary-color: black;
   --crest: url(crest/hufflepuff.png);
-  --crestheight: 62px;
+  --crestwidth: 34px;
 }
 
 /** list of details **/
@@ -139,32 +146,31 @@ select#sorting,
 }
 
 #search_bar button {
-  background-image: url(img/search.jpg);
+  background-image: url(img/search.svg);
   background-size: 100%;
-  height: 25px;
-  width: 25px;
+  height: 30px;
+  width: 30px;
   margin: 5px 0 0 0;
   padding: 5px;
   border: none;
   cursor: pointer;
+  background-color: none;
+  color: none;
 }
 
 /** List/overview **/
 
 #student {
-  border: none;
   padding: 10px;
-  background-color: #c6c8cc70;
-  border-radius: 5px;
+  background-color: var(--beigecolor);
+  border-radius: 20px;
+  border: 1px solid black;
   text-align: center;
+  cursor: pointer;
 }
 
 #student:hover {
-  background-color: #c6c8cc;
-}
-
-#list_img {
-  cursor: pointer;
+  background-color: #ebdeb4;
 }
 
 #list {
@@ -178,6 +184,42 @@ select#sorting,
 #list_img {
   width: 140px;
   margin: 10px 0;
+}
+
+/** badges/buttons **/
+
+#list_buttons {
+  display: flex;
+  justify-content: center;
+}
+
+#make_prefect,
+#make_prefect2 {
+  background-image: url(img/prefect_badge.svg);
+  background-size: 100%;
+  height: 43px;
+  width: 47px;
+}
+
+#squad_button,
+#squad_button2 {
+  background-image: url(img/squad_badge.svg);
+  background-size: 100%;
+  height: 42px;
+  width: 45px;
+}
+
+#expel_button {
+  background-image: url(img/expel_badge.svg);
+  background-size: 100%;
+  height: 40px;
+  width: 43px;
+}
+
+#make_prefect:hover,
+#squad_button:hover,
+#expel_button:hover {
+  transform: scale(1.05);
 }
 
 /**** Popup window *****/
@@ -211,14 +253,15 @@ select#sorting,
     "img house"
     "img bloodstatus"
     "img ."
-    "theme crest";
+    "badges ."
+    ". theme";
 }
 
 #popup_crest {
   background-image: var(--crest);
   background-size: 100%;
-  width: 50px;
-  height: var(--crestheight);
+  width: var(--crestwidth);
+  height: 42px;
   grid-area: crest;
 }
 
@@ -257,6 +300,12 @@ select#sorting,
 
 #popup_bloodstatus {
   grid-area: bloodstatus;
+}
+
+#badges {
+  grid-area: badges;
+  display: flex;
+  padding: 10px 30px;
 }
 
 /** Select/option thingy **/
@@ -298,8 +347,9 @@ select#theme {
   width: 80vw;
   min-height: 30vh;
   margin: 20vh auto;
-  padding: 1rem 2rem;
-  background-color: white;
+  padding: 5rem 2rem;
+  background-color: var(--beigecolor);
+  border: 2px solid black;
   text-align: center;
 }
 

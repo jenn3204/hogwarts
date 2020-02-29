@@ -62,20 +62,22 @@
       </div>
     </section>
 
-    <template>
+    <template id="list_template">
       <article id="student">
-        <h3 id="name"></h3>
-        <p id="house"></p>
-        <img id="list_img" src="" alt="" />
-        <button id="make_prefect">Make prefect</button>
-        <button id="squad_button">Add to inquisitorial squad</button>
-        <button id="expel_button">Expell</button>
+        <div id="list_info">
+          <h3 id="name"></h3>
+          <p id="house"></p>
+          <img id="list_img" src="" alt="" />
+        </div>
+        <div id="list_buttons">
+          <div id="make_prefect"></div>
+          <div class="hide" id="squad_button"></div>
+          <div id="expel_button"></div>
+        </div>
       </article>
     </template>
 
     <section id="list"></section>
-
-    <button id="hack_button">DONT PRESS THIS BUTTON!</button>
 
     <section id="popup" data-house="">
       <article id="student_popup">
@@ -86,7 +88,11 @@
         <p id="popup_house"></p>
         <p id="popup_gender"></p>
         <p id="popup_bloodstatus"></p>
-        <div id="popup_crest"></div>
+        <div id="badges">
+          <div id="popup_crest"></div>
+          <div class="hide" id="make_prefect2"></div>
+          <div class="hide" id="squad_button2"></div>
+        </div>
         <label id="theme-changer">
           <p>Choose theme</p>
           <select name="theme" id="theme">
@@ -101,13 +107,15 @@
 
     <section id="alert_popup">
       <article id="alert_box">
-        <h3 id="onlytwo">Oh no! You can only choose two students from the same house!</h3>
+        <h3 id="onlytwo">Oh no! You can only choose two students from each house!</h3>
         <h3 id="notsamegender">And it has to be a boy and a girl!</h3>
         <h3 id="squad_info">Oh no! only pureblooded students from Slytherin can be added to the inquisitorial squad!</h3>
         <h3 id="noexpel">Oh no no no no! You can not expel this student, as she is the smartest and most valuable student at the school</h3>
         <button id="close_info">Back to list</button>
       </article>
     </section>
+
+    <footer><button id="hack_button">DONT PRESS THIS BUTTON!</button></footer>
 
     <script src="script.js"></script>
   </body>
