@@ -36,6 +36,7 @@ const settings = {
 };
 
 function start() {
+  // calling the familylist data first, to make sure all the data from both json files are finished at the same time
   getData(familiesList, prepareBloodstatus);
   hidePopup();
 
@@ -45,7 +46,6 @@ function start() {
 
   //search
   document.querySelector("#search").addEventListener("input", search);
-  // document.querySelector("#search_bar button").addEventListener("click", search);
 
   // hacking
   document.querySelector("#hack_button").addEventListener("click", systemHacked);
@@ -60,6 +60,7 @@ function getData(url, callback) {
 }
 
 function prepareBloodstatus(familiesJson) {
+  // the json data is put in to two arrays, one with the halfblood families and one pureblood
   pureblood = familiesJson.pure;
   halfblood = familiesJson.half;
 
@@ -146,13 +147,16 @@ function prepareData(jsonData) {
 
     //blood status
 
-    console.log("ELLER HER?");
+    // if the students last name is in both lists/arrays, they are halfblood (because im a nice person)
     if (pureblood.indexOf(student.lastname) > -1 && halfblood.indexOf(student.lastname) > -1) {
-      student.bloodstatus = "Pureblood (but with half)";
+      student.bloodstatus = "Pureblood";
+      // if the students lastname is only in the array of pureblood family names, they will be pureblooded
     } else if (pureblood.indexOf(student.lastname) > -1) {
       student.bloodstatus = "Pureblood";
+      // if the students lastname is only in the array of halfblood family names, they will be halfblooded
     } else if (halfblood.indexOf(student.lastname) > -1) {
       student.bloodstatus = "Halfblood";
+      // if the students lastname is not in any of the arrays, it means they are muggleborn
     } else {
       student.bloodstatus = "Muggleborn";
     }
@@ -165,6 +169,7 @@ function prepareData(jsonData) {
 }
 
 function buildList() {
+  // the list gets filteret by whatever filter is chosen og current list is declared
   const currentList = filterStudents(settings.filter);
   console.log("setiings: " + settings.filter);
 
@@ -188,7 +193,7 @@ function showJson(student) {
   clone.querySelector("#list_img").alt = "Student Portrait";
   clone.querySelector("#house").textContent = student.house;
 
-  //prefects and inquisitorial squad
+  //prefects badges
 
   if (student.prefect == false) {
     clone.querySelector("#make_prefect").style.filter = "grayscale(100)";
@@ -199,6 +204,8 @@ function showJson(student) {
   clone.querySelector("#make_prefect").addEventListener("click", function() {
     togglePrefects(student);
   });
+
+  // the inquisitorial squad member badge is only shown on relevant students
 
   if (student.squad == false) {
     clone.querySelector("#squad_button").style.filter = "grayscale(100)";
@@ -229,15 +236,17 @@ function showJson(student) {
 
   // if system is hacked, make students bloodstatus untrustworthy
   if (systemIsHacked) {
-    console.log("ER DU HER?");
     const bloodStatusArray = ["Muggleborn", "Halfblood", "Pureblood"];
 
+    // if the students lastname is on both lists, the student will now (after hacking) be given a random bloodstatus
     if (pureblood.indexOf(student.lastname) > -1 && halfblood.indexOf(student.lastname) > -1) {
       let randomStatus = Math.floor(Math.random() * bloodStatusArray.length);
       student.bloodstatus = bloodStatusArray[randomStatus];
+      // if the student is pureblooded, they will be given a random bloodstatus
     } else if (pureblood.indexOf(student.lastname) > -1) {
       let randomStatus = Math.floor(Math.random() * bloodStatusArray.length);
       student.bloodstatus = bloodStatusArray[randomStatus];
+      // if the student is halfblood og muggleborn, they will now be listed as pureblood
     } else if (halfblood.indexOf(student.lastname) > -1) {
       student.bloodstatus = "Pureblood";
     } else {
@@ -365,27 +374,12 @@ function filterStudents(chosenFilter) {
 function sort() {
   console.log(this);
   const chosenSorting = this.value;
-  const direction = this.dataset.sortDirection;
 
-  console.log("direction" + direction);
   console.log("sort" + chosenSorting);
-
-  if (settings.sorting == chosenSorting) {
-    toggleDirection(direction, chosenSorting);
-  }
 
   settings.sorting = chosenSorting;
 
   sortFunction(chosenSorting);
-}
-
-function toggleDirection(direction, chosenSorting) {
-  console.log("toggle");
-  if (direction === "asc") {
-    document.querySelector(`[data-sort="${chosenSorting}"]`).setAttribute("data-sort-direction", "desc");
-  } else {
-    document.querySelector(`[data-sort="${chosenSorting}"]`).setAttribute("data-sort-direction", "asc");
-  }
 }
 
 function sortFunction(chosenSorting) {
@@ -448,13 +442,17 @@ function searchFor(chosenSearch) {
 
 // expelling
 function expelStudent(student) {
+  //finding the index of this specific student in the array of students
   const studentIndex = students.indexOf(student);
   console.log(studentIndex);
 
-  if (student.house == "Anemonehus") {
+  // if the user is trying to expel me, it will not be possible and a warning will pop up
+  if (student.firstname == "Jennifer") {
     showExpelAlert();
   } else {
+    //from the array of students, cut out the 1 object with the index of the chosen student
     students.splice(studentIndex, 1);
+    // the student is then placed in another array, the array of expelled students
     expelledStudents.push(student);
     student.expelled = true;
   }
@@ -472,22 +470,28 @@ function showExpelled() {
 // prefects and inquisitorial squad
 
 function togglePrefects(student) {
+  // prefect = the students with "prefect = true"
   const prefects = students.filter(student => student.prefect);
   console.log(prefects);
 
+  // prefectsOfSameHouse = finding the students with "prefect = true" that are also from the same house
   const prefectsOfSameHouse = prefects.filter(prefect => prefect.house === student.house);
   console.log(prefectsOfSameHouse);
 
+  // finding the prefects that are both from the same house and also the same gender
   const prefectGender = prefects.some(prefect => {
     return prefect.gender === student.gender && prefect.house === student.house;
   });
 
   if (student.prefect == true) {
+    // if the student is already a prefect, revoke them from being so, when you push the button/badge
     student.prefect = false;
   } else if (student.prefect == false) {
+    // if the student is not already a prefect, but there are already two students from the house who are prefects, its not possible and show a warning
     if (prefectsOfSameHouse.length > 1) {
       student.prefect = false;
       showPrefectAlert();
+      // if the student is the same gender and house as someone who is already a prefect, it will not be possible and warning will pop up
     } else if (prefectGender) {
       student.prefect = false;
       showPrefectGenderAlert();
@@ -562,10 +566,14 @@ function showExpelAlert() {
   document.querySelector("#close_info").addEventListener("click", hidePopup);
 }
 
-function systemHacked(student) {
+function systemHacked() {
+  // this functions hacks the system
+
+  // the hacking events will only happen is the system is not already hacked
   if (systemIsHacked == false) {
     document.querySelector("body").style.backgroundImage = "url(img/hearts_background.svg";
 
+    // creating Student object with my own information
     const myself = Object.create(Student);
     myself.firstname = "Jennifer";
     myself.middlename = "Strejby";
@@ -578,6 +586,7 @@ function systemHacked(student) {
     myself.squad = false;
     myself.cannotBeExpelled = true;
 
+    // pushing me, the object, to the list of students
     students.unshift(myself);
 
     showList(students);
